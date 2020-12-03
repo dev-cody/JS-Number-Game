@@ -1,22 +1,22 @@
 //Grab elements
 const check = document.querySelector('.check');
 const num = document.querySelector('.number');
+const playAgain = document.querySelector('.again');
+//Grab the message
+let message = document.querySelector('.message');
+let guessScore = document.querySelector('.score');
 //Creating the function
 
 //Creating the random number
-const number = Math.trunc(Math.random() * 20)+1; 
+let number = Math.trunc(Math.random() * 20)+1; 
+
 //Score
 let score = 20;
 let highScore = 0;
 
-num.textContent = number;
-
 const checkNumber = (e) => {
     //Grabbing the guessed number
     const guess = document.querySelector('.guess').value;
-    //Grab the message
-    let message = document.querySelector('.message');
-    let guessScore = document.querySelector('.score');
 
     //If no number is selected
     if (!guess) {
@@ -24,6 +24,9 @@ const checkNumber = (e) => {
     //When player wins
     } else if (guess == number) {
         message.textContent = 'That is correct!🥳';
+        num.textContent = number;
+        document.querySelector('body').style.backgroundColor = '#d4cbb2';
+        num.style.width = '20rem';
     //When guess is larger
     } else if (guess > number) {
         message.textContent = 'That is too high!'
@@ -47,6 +50,28 @@ const checkNumber = (e) => {
     };
 };
 
-//Call the event
+//Creating the reset function
+const reset = (e) => {
+    //Creating the random number
+    number = Math.trunc(Math.random() * 20)+1; 
+    //Reset the school
+    score = 20;
+    displayMessage('Start guessing...')
+    guessScore.textContent = score;
+    num.textContent = '?';
+    document.querySelector('.guess').value = '';
+
+    //Reset the CSS
+    document.querySelector('body').style.backgroundColor = '#222';
+    num.style.width = '15rem';
+};
+
+const displayMessage = (message) => {
+    document.querySelector('.message').textContent = message;
+}
+
+//Event listeners
 check.addEventListener('click', checkNumber);
+playAgain.addEventListener('click', reset);
+
 
